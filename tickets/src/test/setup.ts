@@ -10,7 +10,10 @@ declare global {
 
 let mongo: any
 
+jest.mock('../nats-wrapper');
+
 beforeAll(async () => {
+    jest.clearAllMocks();
     process.env.JWT_KEY = 'asdf';
 
     mongo = await MongoMemoryServer.create();

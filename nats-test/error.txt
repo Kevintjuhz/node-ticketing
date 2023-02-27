@@ -1,0 +1,5 @@
+If you get an error with connection refused.
+
+Make sure to run kubectl get pods, copy the nats depl pod.
+
+And then run kubectl port-forward {nats_depl} 4222:4222 & kubectl port-forward {nats_depl} 8222:8222
