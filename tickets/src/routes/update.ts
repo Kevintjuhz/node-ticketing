@@ -36,14 +36,18 @@ router.put(
         if (ticket.userId !== req.currentUser!.id) {
             throw new NotAuthorizedError();
         }
-
+        
         ticket.set({
             title: req.body.title,
             price: req.body.price
         })
         await ticket.save();
         await  new TicketUpdatedPublisher(natsWrapper.client).publish({
-            id: ticket.id, price: ticket.price, title: ticket.title, userId: ticket.userId
+            id: ticket.id,
+            price: ticket.price,
+            title: ticket.title,
+            userId: ticket.userId,
+            version: ticket.version
         })
 
         res.send(ticket)
