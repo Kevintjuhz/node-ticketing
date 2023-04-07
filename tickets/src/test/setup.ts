@@ -11,17 +11,19 @@ let mongo: any
 jest.mock('../nats-wrapper');
 
 beforeAll(async () => {
-    jest.clearAllMocks();
+    // jest.clearAllMocks();
     process.env.JWT_KEY = 'asdf';
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
     mongo = await MongoMemoryServer.create();
     const mongoUri = mongo.getUri();
 
-    await mongoose.connect(mongoUri, {});
-    mongoose.set('strictQuery', true);
+    // @ts-ignore
+    await mongoose.connect(mongoUri);
 })
 
 beforeEach(async () => {
+    jest.clearAllMocks();
     const collections = await mongoose.connection.db.collections();
 
     for (let collection of collections) {
@@ -30,9 +32,7 @@ beforeEach(async () => {
 })
 
 afterAll(async () => {
-    if (mongo) {
-        await mongo.stop();
-    }
+    await mongo.stop();
     await mongoose.connection.close();
 });
 
