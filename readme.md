@@ -22,3 +22,30 @@ once the secret is created, you can boot up the development server by running:
 ```bash
 skaffold dev
 ```
+
+### Kubernetes context
+
+There are currently two contexts. One for local development and one for deloyment.
+
+To view the contexts, run:
+```bash
+kubectl config view
+```
+
+To switch context, run:
+```bash
+kubectl config use-context <context-name>
+```
+
+Available contexts:
+```yaml
+contexts:
+  - context:
+      cluster: do-ams3-ticketing
+      user: do-ams3-ticketing-admin
+      name: do-ams3-ticketing
+  - context:
+      cluster: docker-desktop
+      user: docker-desktop
+      name: docker-desktop
+```
